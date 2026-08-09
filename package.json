@@ -89,7 +89,7 @@
     "type-plus": "^7.0.1",
     "typescript": "^5.0.0"
   },
-  "packageManager": "pnpm@11.20.0",
+  "packageManager": "pnpm@11.21.0",
   "engines": {
     "node": ">=6"
   },
