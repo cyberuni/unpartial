@@ -1,4 +1,4 @@
-## 1.0.0
+# unpartial
 
 ## 1.0.5
 
@@ -45,6 +45,8 @@
 
   While this can be considered as a fix,
   it is better to release it as a breaking change this change might accidentally break consuming code.
+
+## 1.0.0
 
 ## [0.7.5](https://github.com/unional/unpartial/compare/v0.7.4...v0.7.5) (2022-06-11)
 

@@ -101,12 +101,12 @@ This repository contributors are welcome to use
 test results immediately as you type, and see the results in
 your editor right next to your code.
 
-[codecov-image]: https://codecov.io/gh/unional/unpartial/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/unional/unpartial
+[codecov-image]: https://codecov.io/gh/cyberuni/unpartial/branch/main/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/cyberuni/unpartial
 [downloads-image]: https://img.shields.io/npm/dm/unpartial.svg?style=flat
 [downloads-url]: https://npmjs.org/package/unpartial
-[github-nodejs]: https://github.com/unional/unpartial/workflows/release/badge.svg
-[github-action-url]: https://github.com/unional/unpartial/actions
+[github-nodejs]: https://github.com/cyberuni/unpartial/workflows/release/badge.svg
+[github-action-url]: https://github.com/cyberuni/unpartial/actions
 [npm-image]: https://img.shields.io/npm/v/unpartial.svg?style=flat
 [npm-url]: https://npmjs.org/package/unpartial
 [vscode-image]: https://img.shields.io/badge/vscode-ready-green.svg

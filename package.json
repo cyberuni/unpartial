@@ -2,13 +2,13 @@
   "name": "unpartial",
   "version": "1.0.5",
   "description": "Unpartial a partialed object",
-  "homepage": "https://github.com/unional/unpartial",
+  "homepage": "https://github.com/cyberuni/unpartial",
   "bugs": {
-    "url": "https://github.com/unional/unpartial/issues"
+    "url": "https://github.com/cyberuni/unpartial/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/unional/unpartial.git"
+    "url": "https://github.com/cyberuni/unpartial.git"
   },
   "license": "MIT",
   "author": {
