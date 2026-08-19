@@ -60,7 +60,7 @@
     "watch:type": "tsc --watch"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.25.0",
+    "@changesets/cli": "^3.0.0",
     "@commitlint/cli": "^21.0.0",
     "@commitlint/config-conventional": "^21.0.0",
     "@jest/globals": "^29.5.0",
