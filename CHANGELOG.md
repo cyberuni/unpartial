@@ -1,5 +1,12 @@
 # unpartial
 
+## 1.0.6
+
+### Patch Changes
+
+- 40bc7b3: Point repository metadata at `cyberuni/unpartial` and publish through npm trusted
+  publishing (OIDC) with provenance.
+
 ## 1.0.5
 
 ### Patch Changes
