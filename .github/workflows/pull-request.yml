@@ -10,9 +10,3 @@ jobs:
     with:
       os: '["ubuntu-latest"]'
       skip-playwright: true
-
-  publish-gate:
-    if: startsWith(github.head_ref, 'changeset-release/')
-    uses: cyberuni/.github/.github/workflows/pnpm-publish-gate.yml@main
-    permissions:
-      contents: read
