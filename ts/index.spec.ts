@@ -1,20 +1,20 @@
-import { describe, expect, it, test } from '@jest/globals'
 import t from 'node:assert'
 import { assertType, isType } from 'type-plus'
+import { describe, expect, it, test } from 'vitest'
 import { required, requiredDeep, unpartial, unpartialRecursively } from './index.js'
 
-type TestSubject = { require: { a: number }, optional?: { a: number } }
+type TestSubject = { require: { a: number }; optional?: { a: number } }
 
 describe('unpartial(base, input)', () => {
 	it('requires all default fields to be filled in for base', () => {
-		type Options = { a: number, b?: number }
+		type Options = { a: number; b?: number }
 		const a = unpartial<Options>({ a: 1 }, {})
 
 		assertType<Options>(a)
 	})
 
 	it('allows base to skip optional fields', () => {
-		type Options = { a: number, b?: string, c?: boolean }
+		type Options = { a: number; b?: string; c?: boolean }
 
 		const a = unpartial<Options>({ a: 1, b: 'b' }, {})
 
@@ -22,10 +22,10 @@ describe('unpartial(base, input)', () => {
 	})
 
 	it('augments additional types from partial', () => {
-		const input: { a?: number, b: string, c?: boolean, d?: { x: number } } = { b: 'b' }
+		const input: { a?: number; b: string; c?: boolean; d?: { x: number } } = { b: 'b' }
 		const a = unpartial({ a: 1 }, input)
 
-		assertType<{ a: number, b: string, c?: boolean | undefined, d?: { x: number } | undefined }>(a)
+		assertType<{ a: number; b: string; c?: boolean | undefined; d?: { x: number } | undefined }>(a)
 	})
 
 	it('add optional property type to required property', () => {
@@ -77,23 +77,23 @@ describe('unpartial(base, input)', () => {
 	})
 
 	it('will not modify base and partial', () => {
-		type Base = { require: { a: number }, optional?: { a: number } }
+		type Base = { require: { a: number }; optional?: { a: number } }
 		const base: Base = { require: { a: 1 }, optional: { a: 2 } }
 		const partial = { require: { a: 3 } }
 		const a = unpartial(base, partial)
 
-		assertType<{ require: { a: number }, optional?: { a: number } | undefined }>(a)
+		assertType<{ require: { a: number }; optional?: { a: number } | undefined }>(a)
 		t.deepStrictEqual(base, { require: { a: 1 }, optional: { a: 2 } })
 		t.deepStrictEqual(partial, { require: { a: 3 } })
 		t.deepStrictEqual(a, { require: { a: 3 }, optional: { a: 2 } })
 	})
 
 	it('detects not optional fields from partial', () => {
-		type Options = { b: number, c?: number }
+		type Options = { b: number; c?: number }
 		const options: Options = { b: 2 }
 		const a = unpartial({ a: 1 }, options)
 
-		assertType<{ a: number, b: number, c?: number }>(a)
+		assertType<{ a: number; b: number; c?: number }>(a)
 		expect(a).toEqual({ a: 1, b: 2 })
 	})
 
@@ -103,21 +103,19 @@ describe('unpartial(base, input)', () => {
 	})
 
 	it('skips property that explicitly undefined or null', () => {
-		const a = unpartial<{ a: number, b: number | null }>(
-			{ a: 1, b: 2 },
-			{ a: undefined, b: null })
+		const a = unpartial<{ a: number; b: number | null }>({ a: 1, b: 2 }, { a: undefined, b: null })
 		expect(a).toEqual({ a: 1, b: 2 })
 	})
 
 	it('works with optional type', () => {
-		type Input = { a: number, b?: number } | undefined
+		type Input = { a: number; b?: number } | undefined
 		const i = undefined as Input
 		const a = unpartial({ b: 2 }, i)
-		isType.equal<true, { a: number, b: number }, typeof a>()
+		isType.equal<true, { a: number; b: number }, typeof a>()
 	})
 
 	it('keeps optional props optional', () => {
-		type Options = { a: number, b?: number }
+		type Options = { a: number; b?: number }
 		type Input = Partial<Options>
 		const base: Options = { a: 1 }
 		const input: Input = {}
@@ -128,7 +126,7 @@ describe('unpartial(base, input)', () => {
 	it('will not merge deeply', () => {
 		const a = unpartial({ a: { b: 1 } }, { a: { c: 2 } })
 
-		isType.equal<false, { a: { b: number, c: number } }, typeof a>()
+		isType.equal<false, { a: { b: number; c: number } }, typeof a>()
 		isType.equal<true, { a: { b: number } | { c: number } }, typeof a>()
 	})
 
@@ -163,13 +161,13 @@ describe('unpartial(parent, base, partial)', () => {
 	})
 	it('gets type from parent, base, and input', () => {
 		const a = unpartial({ a: 1 }, unpartial({ b: 2 }, { c: 3 }))
-		assertType<{ a: number, b: number, c: number }>(a)
+		assertType<{ a: number; b: number; c: number }>(a)
 		expect(a).toEqual({ a: 1, b: 2, c: 3 })
 	})
 
 	it('can specify the base type', () => {
 		type ParentOptions = { a: number }
-		type Base = ParentOptions & { b: number, c?: { d?: boolean } }
+		type Base = ParentOptions & { b: number; c?: { d?: boolean } }
 		type Input = Partial<Base> | undefined
 		const p = { a: 1 } as ParentOptions
 		const b = { b: 2 } as Base
@@ -184,7 +182,7 @@ describe('unpartial(parent, base, partial)', () => {
 	})
 	it('combine parent and base', () => {
 		type Parent = { a: number }
-		type Base = Parent & { b: number, c?: boolean }
+		type Base = Parent & { b: number; c?: boolean }
 		type Input = Partial<Base>
 		const p = { a: 1 } as Parent
 		const i = {} as Input
@@ -197,7 +195,7 @@ describe('unpartial(parent, base, partial)', () => {
 
 describe('unpartialRecursively()', () => {
 	interface Config {
-		require: { a: number },
+		require: { a: number }
 		optional?: { a: number }
 	}
 	const defaultConfig: Config = { require: { a: 1 } }
@@ -266,7 +264,7 @@ describe('unpartialRecursively()', () => {
 		interface DeepConfig {
 			require: {
 				a: {
-					b: number,
+					b: number
 					c?: string
 				}
 			}
@@ -320,9 +318,9 @@ describe('required()', () => {
 	})
 
 	type Source1 = {
-		a: string,
-		b: number,
-		c: { d: boolean },
+		a: string
+		b: number
+		c: { d: boolean }
 		e?: string
 	}
 
@@ -339,9 +337,9 @@ describe('required()', () => {
 	})
 
 	type Source2 = {
-		p: string,
-		q: number,
-		r: { s: boolean },
+		p: string
+		q: number
+		r: { s: boolean }
 		t?: string
 	}
 
@@ -359,9 +357,9 @@ describe('required()', () => {
 	})
 
 	type Source3 = {
-		w: string,
-		x: number,
-		y: { z: boolean },
+		w: string
+		x: number
+		y: { z: boolean }
 		u?: string
 	}
 
@@ -412,7 +410,9 @@ describe('requiredDeep()', () => {
 		}
 
 		class Boo extends Foo {
-			d(this: void) { return 4 }
+			d(this: void) {
+				return 4
+			}
 		}
 		const boo = new Boo()
 		const actual = requiredDeep({ a: { b: { x: 1 } } }, undefined, { a: { b: boo } })

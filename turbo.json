@@ -1,0 +1,34 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"tasks": {
+		"build": {
+			"inputs": ["package.json", "tsconfig.json", "tsdown.config.ts", "ts/**/*.tsx?"],
+			"outputs": ["cjs/**", "esm/**"]
+		},
+		"clean": {
+			"cache": false
+		},
+		"coverage": {
+			"dependsOn": ["build"],
+			"inputs": ["package.json", "tsconfig.json", "vitest.config.ts", "ts/**/*.tsx?"],
+			"outputs": ["coverage/**"]
+		},
+		"depcheck": {
+			"inputs": ["package.json", ".depcheckrc.yaml", "ts/**/*.tsx?"]
+		},
+		"nuke": {
+			"cache": false
+		},
+		"test": {
+			"dependsOn": ["build"],
+			"inputs": ["package.json", "tsconfig.json", "vitest.config.ts", "ts/**/*.tsx?"]
+		},
+		"typecheck": {
+			"inputs": ["package.json", "tsconfig.json", "tsdown.config.ts", "ts/**/*.tsx?"]
+		},
+		"watch": {
+			"cache": false,
+			"persistent": true
+		}
+	}
+}
