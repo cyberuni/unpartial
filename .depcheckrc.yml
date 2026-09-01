@@ -1,9 +1,0 @@
-ignores:
-  - '@commitlint/*'
-  - '@repobuddy/*'
-  - '@size-limit/*'
-  - '@types/*'
-  - '@typescript-eslint/parser'
-  - jest-*
-  - rimraf # https://github.com/depcheck/depcheck/issues/776
-  - ts-jest
