@@ -1,3 +1,31 @@
 {
-	"extends": ["github>unional/renovate-preset"]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"description": "Renovate is the only updater; GitHub's own auto-merge is the only thing that merges. The automerge policy below is the body unional/renovate-preset is supposed to carry — the published preset is still the old config:base + preserveSemverRanges pair and has none of it, so it is inlined here until that repo catches up.",
+	"extends": ["github>unional/renovate-preset", "config:recommended", ":semanticCommits"],
+	"minimumReleaseAge": "3 days",
+	"platformAutomerge": true,
+	"rebaseWhen": "behind-base-branch",
+	"packageRules": [
+		{
+			"matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+			"automerge": true
+		},
+		{
+			"matchDepTypes": ["devDependencies"],
+			"automerge": true
+		},
+		{
+			"matchUpdateTypes": ["major"],
+			"automerge": false,
+			"additionalBranchPrefix": "major-"
+		}
+	],
+	"vulnerabilityAlerts": {
+		"minimumReleaseAge": "1 day",
+		"automerge": true
+	},
+	"lockFileMaintenance": {
+		"enabled": true,
+		"automerge": true
+	}
 }
