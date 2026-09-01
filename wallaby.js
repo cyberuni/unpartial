@@ -6,12 +6,12 @@ export default () => {
 			{ pattern: 'package.json', instrument: false },
 			{ pattern: 'tsconfig.*', instrument: false },
 			'ts/**/*.ts',
-			'!ts/**/*.spec.ts',
+			'!ts/**/*.spec.ts'
 		],
 		tests: ['ts/**/*.spec.ts'],
 		env: {
-			type: 'node',
+			type: 'node'
 		},
-		autoDetect: true,
-	};
-};
+		autoDetect: true
+	}
+}

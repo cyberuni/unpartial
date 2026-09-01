@@ -1,7 +1,26 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "esm",
-    "target": "es2021"
-  }
+	"compilerOptions": {
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"newLine": "LF",
+		// tsdown emits the build. This config exists to typecheck only, which the
+		// `tsc` build passes it replaced used to do as a side effect.
+		"noEmit": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"skipLibCheck": true,
+		"strict": true,
+		// `exactOptionalPropertyTypes` stays off: the public overloads model optional
+		// properties as `T | undefined` on purpose, and the specs assert that shape.
+		"exactOptionalPropertyTypes": false,
+		"target": "ES2022",
+		// TypeScript 7 no longer pulls every @types/* package into the global scope on
+		// its own, so the ambient ones this package relies on are named here.
+		"types": ["node"]
+	},
+	"include": ["ts", "tsdown.config.ts", "vitest.config.ts"]
 }
