@@ -21,7 +21,7 @@ importers:
         specifier: ^21.2.0
         version: 21.2.3
       '@repobuddy/biome':
-        specifier: ^2.3.1
+        specifier: ^2.4.0
         version: 2.4.0(@biomejs/biome@2.5.14)
       '@types/node':
         specifier: ^26.4.0
@@ -48,8 +48,8 @@ importers:
         specifier: ^2.10.12
         version: 2.11.4
       type-plus:
-        specifier: 8.0.0-beta.11
-        version: 8.0.0-beta.11(typescript@7.0.2)
+        specifier: 8.0.0-beta.12
+        version: 8.0.0-beta.12(typescript@7.0.2)
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1687,8 +1687,8 @@ packages:
     resolution: {integrity: sha512-nedZtJ2hjWpU/JBFq7Aj1GQBxQ56si+kIUmNZBUX35O35TIuhSBR6/u3yHHmk81U+RBdBcVjvLQ3/iOFzMwKsA==}
     hasBin: true
 
-  type-plus@8.0.0-beta.11:
-    resolution: {integrity: sha512-8/QsyrWhzvUpq7HREOUR4T4sVMiVMBYvMLH9brYvfwc0Nr71a2mPAafrWwg6W5EWsgIr0TUBHBNtwO8neKZUUg==}
+  type-plus@8.0.0-beta.12:
+    resolution: {integrity: sha512-isf19V90L8JOn9VBWWwUfH8DU6G3dfPptr3R+JtraYWHqLAsXYI2f9x1HZVTkajrkSffdEbetXUXf7FcIjSIRg==}
     peerDependencies:
       typescript: '>= 5.4.0'
 
@@ -3275,7 +3275,7 @@ snapshots:
       '@turbo/windows-64': 2.11.4
       '@turbo/windows-arm64': 2.11.4
 
-  type-plus@8.0.0-beta.11(typescript@7.0.2):
+  type-plus@8.0.0-beta.12(typescript@7.0.2):
     dependencies:
       tersify: 4.0.7
       typescript: 7.0.2

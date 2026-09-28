@@ -1,5 +1,5 @@
 import t from 'node:assert'
-import { assertType, isType } from 'type-plus'
+import { testType } from 'type-plus'
 import { describe, expect, it, test } from 'vitest'
 import { required, requiredDeep, unpartial, unpartialRecursively } from './index.js'
 
@@ -10,7 +10,7 @@ describe('unpartial(base, input)', () => {
 		type Options = { a: number; b?: number }
 		const a = unpartial<Options>({ a: 1 }, {})
 
-		assertType<Options>(a)
+		testType.of(a).canAssign<Options>(true)
 	})
 
 	it('allows base to skip optional fields', () => {
@@ -18,21 +18,21 @@ describe('unpartial(base, input)', () => {
 
 		const a = unpartial<Options>({ a: 1, b: 'b' }, {})
 
-		assertType<Options>(a)
+		testType.of(a).canAssign<Options>(true)
 	})
 
 	it('augments additional types from partial', () => {
 		const input: { a?: number; b: string; c?: boolean; d?: { x: number } } = { b: 'b' }
 		const a = unpartial({ a: 1 }, input)
 
-		assertType<{ a: number; b: string; c?: boolean | undefined; d?: { x: number } | undefined }>(a)
+		testType.of(a).canAssign<{ a: number; b: string; c?: boolean | undefined; d?: { x: number } | undefined }>(true)
 	})
 
 	it('add optional property type to required property', () => {
 		const input: { a?: string } = {}
 		const a = unpartial({ a: 1 }, input)
 
-		assertType<{ a: number | string }>(a)
+		testType.of(a).canAssign<{ a: number | string }>(true)
 	})
 
 	it('adds type to optional property', () => {
@@ -42,7 +42,7 @@ describe('unpartial(base, input)', () => {
 		const input: Input = {}
 		const a = unpartial(base, input)
 
-		assertType<{ a?: number | string }>(a)
+		testType.of(a).canAssign<{ a?: number | string }>(true)
 	})
 
 	it('returns undefined if base is undefined to avoid unintended error in JS', () => {
@@ -65,14 +65,14 @@ describe('unpartial(base, input)', () => {
 		type RulesOption = Record<string, boolean | [number, Record<string, any>?]>
 		const a = unpartial<RulesOption>({ someRule: [2, { someOption: true }] }, { someRule: false })
 
-		assertType<RulesOption>(a)
+		testType.of(a).canAssign<RulesOption>(true)
 		expect(a).toEqual({ someRule: false })
 	})
 
 	it('gets type from base', () => {
 		const a = unpartial({ a: 1 }, undefined)
 
-		assertType<{ a: number }>(a)
+		testType.of(a).canAssign<{ a: number }>(true)
 		expect(a).toEqual({ a: 1 })
 	})
 
@@ -82,7 +82,7 @@ describe('unpartial(base, input)', () => {
 		const partial = { require: { a: 3 } }
 		const a = unpartial(base, partial)
 
-		assertType<{ require: { a: number }; optional?: { a: number } | undefined }>(a)
+		testType.of(a).canAssign<{ require: { a: number }; optional?: { a: number } | undefined }>(true)
 		t.deepStrictEqual(base, { require: { a: 1 }, optional: { a: 2 } })
 		t.deepStrictEqual(partial, { require: { a: 3 } })
 		t.deepStrictEqual(a, { require: { a: 3 }, optional: { a: 2 } })
@@ -93,7 +93,7 @@ describe('unpartial(base, input)', () => {
 		const options: Options = { b: 2 }
 		const a = unpartial({ a: 1 }, options)
 
-		assertType<{ a: number; b: number; c?: number }>(a)
+		testType.of(a).canAssign<{ a: number; b: number; c?: number }>(true)
 		expect(a).toEqual({ a: 1, b: 2 })
 	})
 
@@ -111,7 +111,7 @@ describe('unpartial(base, input)', () => {
 		type Input = { a: number; b?: number } | undefined
 		const i = undefined as Input
 		const a = unpartial({ b: 2 }, i)
-		isType.equal<true, { a: number; b: number }, typeof a>()
+		testType.equal<typeof a, { a: number; b: number }>(true)
 	})
 
 	it('keeps optional props optional', () => {
@@ -120,20 +120,20 @@ describe('unpartial(base, input)', () => {
 		const base: Options = { a: 1 }
 		const input: Input = {}
 		const a = unpartial(base, input)
-		isType.equal<true, Options, typeof a>()
+		testType.equal<typeof a, Options>(true)
 	})
 
 	it('will not merge deeply', () => {
 		const a = unpartial({ a: { b: 1 } }, { a: { c: 2 } })
 
-		isType.equal<false, { a: { b: number; c: number } }, typeof a>()
-		isType.equal<true, { a: { b: number } | { c: number } }, typeof a>()
+		testType.equal<typeof a, { a: { b: number; c: number } }>(false)
+		testType.equal<typeof a, { a: { b: number } | { c: number } }>(true)
 	})
 
 	it('do not contain `Pick<>` when not necessary', () => {
 		// This test always pass, need to inspect directly
 		const a = unpartial({ a: { a: 1 } }, { a: { b: 2 } })
-		assertType<{ a: { a: number } | { b: number } }>(a)
+		testType.of(a).canAssign<{ a: { a: number } | { b: number } }>(true)
 	})
 })
 
@@ -161,7 +161,7 @@ describe('unpartial(parent, base, partial)', () => {
 	})
 	it('gets type from parent, base, and input', () => {
 		const a = unpartial({ a: 1 }, unpartial({ b: 2 }, { c: 3 }))
-		assertType<{ a: number; b: number; c: number }>(a)
+		testType.of(a).canAssign<{ a: number; b: number; c: number }>(true)
 		expect(a).toEqual({ a: 1, b: 2, c: 3 })
 	})
 
@@ -174,7 +174,7 @@ describe('unpartial(parent, base, partial)', () => {
 		const i = { c: { d: true } } as Input
 		const a = unpartial<Base>(unpartial(p, b), i)
 
-		assertType<Base>(a)
+		testType.of(a).canAssign<Base>(true)
 
 		expect(a.a).toEqual(1)
 		expect(a.b).toEqual(2)
@@ -188,8 +188,8 @@ describe('unpartial(parent, base, partial)', () => {
 		const i = {} as Input
 		const a = required<Base>(p, { b: 2 }, i)
 
-		assertType<Base>(a)
-		isType.equal<true, Base, typeof a>()
+		testType.of(a).canAssign<Base>(true)
+		testType.equal<typeof a, Base>(true)
 	})
 })
 
@@ -292,28 +292,28 @@ describe('required()', () => {
 	test('source2 can be undefined', () => {
 		const actual = required({ a: 1 }, undefined)
 
-		assertType<{ a: number }>(actual)
+		testType.of(actual).canAssign<{ a: number }>(true)
 		expect(actual).toEqual({ a: 1 })
 	})
 
 	test('source2 can be null', () => {
 		const actual = required({ a: 1 }, null)
 
-		assertType<{ a: number }>(actual)
+		testType.of(actual).canAssign<{ a: number }>(true)
 		expect(actual).toEqual({ a: 1 })
 	})
 
 	test('source3 can be undefined', () => {
 		const actual = required({ a: 1 }, undefined, undefined)
 
-		assertType<{ a: number }>(actual)
+		testType.of(actual).canAssign<{ a: number }>(true)
 		expect(actual).toEqual({ a: 1 })
 	})
 
 	test('source3 can be null', () => {
 		const actual = required({ a: 1 }, null, null)
 
-		assertType<{ a: number }>(actual)
+		testType.of(actual).canAssign<{ a: number }>(true)
 		expect(actual).toEqual({ a: 1 })
 	})
 
@@ -329,7 +329,7 @@ describe('required()', () => {
 
 		const actual = required(source1, {})
 
-		assertType<Source1>(actual)
+		testType.of(actual).canAssign<Source1>(true)
 		expect(actual.a).toEqual('a')
 		expect(actual.b).toEqual(2)
 		expect(actual.c.d).toEqual(true)
@@ -349,7 +349,7 @@ describe('required()', () => {
 
 		const actual = required(source1, source2)
 
-		assertType<Source1 & Source2>(actual)
+		testType.of(actual).canAssign<Source1 & Source2>(true)
 		expect(actual.p).toEqual('p')
 		expect(actual.q).toEqual(2)
 		expect(actual.r.s).toEqual(true)
@@ -370,7 +370,7 @@ describe('required()', () => {
 
 		const actual = required(source1, source2, source3)
 
-		assertType<Source1 & Source2 & Source3>(actual)
+		testType.of(actual).canAssign<Source1 & Source2 & Source3>(true)
 		expect(actual.w).toEqual('w')
 		expect(actual.x).toEqual(2)
 		expect(actual.y.z).toEqual(true)
@@ -380,7 +380,7 @@ describe('required()', () => {
 	test('can explicitly specify target type', () => {
 		const actual = required<Source1>({ a: 'a' }, { b: 2 }, { c: { d: true } })
 
-		assertType<Source1>(actual)
+		testType.of(actual).canAssign<Source1>(true)
 		expect(actual.a).toEqual('a')
 		expect(actual.b).toEqual(2)
 		expect(actual.c.d).toEqual(true)
