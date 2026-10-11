@@ -1,5 +1,5 @@
 import t from 'node:assert'
-import { testType } from 'type-plus'
+import { testType } from 'type-plus/testing'
 import { describe, expect, it, test } from 'vitest'
 import { required, requiredDeep, unpartial, unpartialRecursively } from './index.js'
 
