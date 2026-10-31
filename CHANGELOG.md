@@ -1,5 +1,11 @@
 # unpartial
 
+## 1.0.9
+
+### Patch Changes
+
+- aaed85a: Include `CHANGELOG.md` in the published package.
+
 ## 1.0.8
 
 ### Patch Changes
